@@ -1,0 +1,109 @@
+--PREVIEW DATA
+SELECT * FROM `portfolio-projects-420617.tornado.2014` 
+LIMIT 1000;
+
+--COMBINE 2014-2024 AND CREATE VIEW
+
+/*
+CREATE VIEW tornado.combo AS
+SELECT * FROM `portfolio-projects-420617.tornado.2011` 
+UNION ALL 
+SELECT * FROM `portfolio-projects-420617.tornado.2012` 
+UNION ALL 
+SELECT * FROM `portfolio-projects-420617.tornado.2013` 
+UNION ALL 
+SELECT * FROM `portfolio-projects-420617.tornado.2014` 
+UNION ALL 
+SELECT * FROM `portfolio-projects-420617.tornado.2015` 
+UNION ALL 
+SELECT * FROM `portfolio-projects-420617.tornado.2016` 
+UNION ALL 
+SELECT * FROM `portfolio-projects-420617.tornado.2017` 
+UNION ALL
+SELECT * FROM `portfolio-projects-420617.tornado.2018` 
+UNION ALL
+SELECT * FROM `portfolio-projects-420617.tornado.2019` 
+UNION ALL
+SELECT * FROM `portfolio-projects-420617.tornado.2020` 
+UNION ALL
+SELECT * FROM `portfolio-projects-420617.tornado.2021` 
+UNION ALL
+SELECT * FROM `portfolio-projects-420617.tornado.2022` 
+UNION ALL
+SELECT * FROM `portfolio-projects-420617.tornado.2023` 
+UNION ALL
+SELECT * FROM `portfolio-projects-420617.tornado.2024` 
+*/
+
+SELECT * FROM `portfolio-projects-420617.tornado.combo` WHERE state is not null;
+
+--1. LIST ALL EF5 TORNADOS
+
+SELECT *
+FROM `portfolio-projects-420617.tornado.combo`
+WHERE f_scale_values =5;
+
+SELECT 
+  EXTRACT(YEAR FROM date) as year,
+  SUM(deaths_direct) AS total_deaths_direct
+FROM `portfolio-projects-420617.tornado.combo`
+WHERE f_scale_values > 3
+GROUP BY year
+ORDER BY total_deaths_direct DESC;
+
+
+--2. STATES WITH THE MOST TORNADO'S SINCE 2011
+SELECT state, COUNT(*)
+FROM `portfolio-projects-420617.tornado.combo`
+WHERE state is not null
+GROUP BY state
+ORDER BY COUNT(*) DESC
+LIMIT 25;
+
+--3. COMPARE LENGTH WITH PROPERTY DAMAGE
+SELECT state, date, length, damage_property, f_scale_values
+FROM `portfolio-projects-420617.tornado.combo`
+WHERE state is not null
+ORDER BY damage_property DESC, length DESC;
+
+--4. MONTHS WITH THE MOST TORNADOS
+--total with months as numbers
+SELECT EXTRACT(MONTH FROM date)as month, COUNT(*) as tornados
+FROM `portfolio-projects-420617.tornado.combo`
+WHERE state is not null
+GROUP BY month
+ORDER BY tornados DESC;
+
+--total with months by name
+SELECT 
+  FORMAT_DATE('%B', date) AS month,
+  COUNT(*) AS tornados 
+FROM `portfolio-projects-420617.tornado.combo`
+WHERE state IS NOT NULL
+GROUP BY month
+ORDER BY tornados DESC;
+
+--average per year
+
+SELECT 
+  FORMAT_DATE('%B', date) AS month,
+  COUNT(*) AS tornados,
+  COUNT(*) / COUNT(DISTINCT EXTRACT(YEAR FROM date)) AS average_tornados_per_year
+FROM `portfolio-projects-420617.tornado.combo`
+WHERE state IS NOT NULL
+GROUP BY month
+ORDER BY month;
+
+--5. DAMAGES CAUSED BY TORNADOS PER STATE SINCE 2011
+
+SELECT state, 
+date,
+SUM(damage_crops) + SUM(damage_property) AS total_damages 
+FROM `portfolio-projects-420617.tornado.combo`
+WHERE state is not null
+GROUP BY state, date
+ORDER BY date
+
+
+
+
