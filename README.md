@@ -1,11 +1,11 @@
-# Tornado Project
+# Tornado Tracker Project
 ## Project Overview
 1.	Inspiration and questions to be answered
 2.	Data source
 3.	Data cleaning
-4.	Data organizing
+4.	Data organization
 5.	Data visualization
-6.	Answering overall questions from the beginning
+6.	Findings
 
 ## Inspiration and questions to be answered
 This project showcases my ability to download, clean, organize, and visualize findings on a public dataset. There are online trackers and visualizations on tornadoes that are readily available online, which I drew inspiration from. However, all the work presented was done on my own. 
@@ -17,5 +17,30 @@ What are the months with the most tornadoes on average?
 What states have the highest number of tornados per year overall?
 
 ## Data Source
-[Raw data:](Index of /pub/data/swdi/stormevents/csvfiles (noaa.gov))
+This data was chosen because it has details on property and crop damages, specific locations, tornado lengths, EF scores, casualties, injuries, and times. The bulk data from 1950 onward did not have all of the details I wanted. Therefore, I decided to go back to 2011, when there were several EF5 tornados.
+
+[Raw data from the National Centers for Environmental Information](https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/)
+
+## Data Cleaning
+Data was cleaned in excel, because several columns were not going to be used. 
+
+Of the 51 columns of data only 15 columns were needed: state, event type, county, date and time, indirect and direct deaths, indirect and direct injuries, scale, length, city, damages to crops, and damages to property.
+
+The date time column was split into separate columns for date and military time respectively. 
+
+Damages columns were reformatted from strings (ie. 10K, 10M, 4B) to floats to be used in Big Query. 
+
+There was an additional scale column added to convert the string values to integers for calculations to be used in Big Query. 
+
+Finally column orders and formats were left in the same order per year to allow proper unions in SQL. 
+
+## Data Organization
+All queries were run in Big Query 
+[Big Query SQL Scripts.](https://github.com/abealka/Tornado-Project/blob/main/tornado_data)
+
+## Data Visualization
+[Tableau Dashboard](https://public.tableau.com/views/AverageNumberofTornadosPerYear_17144153500490/Dashboard1?:language=en-US&:sid=&:display_count=n&:origin=viz_share_link )
+
+## Findings
+All findings are shown in the viz on Tableau.
 
