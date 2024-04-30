@@ -15,3 +15,6 @@ How many EF5 tornados have there been since 2011?
 What are the states with the most property and crop damages by year? 
 What are the months with the most tornadoes on average? 
 What states have the highest number of tornados per year overall?
+
+## Data Source
+	Raw data: Index of /pub/data/swdi/stormevents/csvfiles (noaa.gov) 
