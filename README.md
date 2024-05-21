@@ -37,6 +37,9 @@ All queries were run in Big Query
 ## Data Visualization
 [Tableau Dashboard](https://public.tableau.com/views/AverageNumberofTornadosPerYear_17144153500490/Dashboard1?:language=en-US&:sid=&:display_count=n&:origin=viz_share_link )
 
+[![Tableau Dashboard](https://github.com/abealka/Tornado-Project/blob/main/tornado_dashboard.png)](https://public.tableau.com/views/AverageNumberofTornadosPerYear_17144153500490/Dashboard1?:language=en-US&:sid=&:display_count=n&:origin=viz_share_link)
+
+
 ## Findings
 All findings are shown in the viz on Tableau.
 
